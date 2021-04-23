@@ -1,13 +1,12 @@
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 
-require('../config/env');
-
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const { createCompiler, prepareUrls } = require('react-dev-utils/WebpackDevServerUtils');
-const paths = require('../config/paths');
-const configFactory = require('../config/webpack.config');
+
+const paths = require('./paths');
+const configFactory = require('./webpack.config');
 
 const port = 3000;
 const host = '0.0.0.0';

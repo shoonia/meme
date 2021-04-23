@@ -6,12 +6,10 @@ const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const paths = require('./paths');
-const getClientEnvironment = require('./env');
 
 const webpackDevClientEntry = require.resolve(
   'react-dev-utils/webpackHotDevClient'
@@ -27,8 +25,6 @@ const cssModuleRegex = /\.module\.css$/;
 module.exports = (webpackEnv) => {
   const isDev = webpackEnv === 'development';
   const isProd = webpackEnv === 'production';
-
-  const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
 
   const getStyleLoaders = (cssOptions) => [
     isDev && require.resolve('style-loader'),
@@ -56,31 +52,10 @@ module.exports = (webpackEnv) => {
     mode: webpackEnv,
     bail: isProd,
     devtool: isDev && 'cheap-module-source-map',
-    entry:
-      isDev
-        ? [
-          // Include an alternative client for WebpackDevServer. A client's job is to
-          // connect to WebpackDevServer by a socket and get notified about changes.
-          // When you save a file, the client will either apply hot updates (in case
-          // of CSS changes), or refresh the page (in case of JS changes). When you
-          // make a syntax error, this client will display a syntax error overlay.
-          // Note: instead of the default WebpackDevServer client, we use a custom one
-          // to bring better experience for Create React App users. You can replace
-          // the line below with these two lines if you prefer the stock client:
-          //
-          // require.resolve('webpack-dev-server/client') + '?/',
-          // require.resolve('webpack/hot/dev-server'),
-          //
-          // When using the experimental react-refresh integration,
-          // the webpack plugin takes care of injecting the dev client for us.
-          webpackDevClientEntry,
-          // Finally, this is your app's code:
-          paths.appIndexJs,
-          // We include the app code last so that if there is a runtime error during
-          // initialization, it doesn't blow up the WebpackDevServer client, and
-          // changing JS code would still trigger a refresh.
-        ]
-        : paths.appIndexJs,
+    entry: [
+      isDev && webpackDevClientEntry,
+      paths.appIndexJs,
+    ].filter(Boolean),
     output: {
       path: isProd ? paths.appBuild : undefined,
       pathinfo: isDev,
@@ -136,12 +111,6 @@ module.exports = (webpackEnv) => {
       ],
       splitChunks: {
         chunks: 'all',
-      },
-      // Keep the runtime chunk separated to enable long term caching
-      // https://twitter.com/wSokra/status/969679223278505985
-      // https://github.com/facebook/create-react-app/issues/5358
-      runtimeChunk: {
-        name: entrypoint => `runtime-${entrypoint.name}`,
       },
     },
     resolve: {
@@ -276,7 +245,7 @@ module.exports = (webpackEnv) => {
               // its runtime that would otherwise be processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
               // by webpacks internal loaders.
-              exclude: [/\.(js|ts|tsx)$/, /\.html$/, /\.json$/],
+              exclude: [/\.(js|ts|tsx)$/, /\.html$/, /\.json$/, /\.ejs$/],
               options: {
                 name: 'static/media/[name].[hash:4].[ext]',
               },
@@ -289,6 +258,7 @@ module.exports = (webpackEnv) => {
     },
     plugins: [
       new HtmlWebpackPlugin({
+        filename: 'index.html',
         inject: true,
         template: paths.appHtml,
         minify: isProd && {
@@ -303,32 +273,26 @@ module.exports = (webpackEnv) => {
           minifyCSS: true,
           minifyURLs: true,
         },
+        templateParameters: {
+          homepage: paths.publicUrlOrPath,
+        }
       }),
       isProd && new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
-      // Makes some environment variables available in index.html.
-      // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
-      // <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
-      // It will be an empty string unless you specify "homepage"
-      // in `package.json`, in which case it will be the pathname of that URL.
-      new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
-      // Makes some environment variables available to the JS code, for example:
-      // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
-      // It is absolutely essential that NODE_ENV is set to production
-      // during a production build.
-      // Otherwise React will be compiled in the very slow development mode.
-      new webpack.DefinePlugin(env.stringified),
-      // This is necessary to emit hot updates (CSS and Fast Refresh):
+      new webpack.DefinePlugin({
+        'process.platform': JSON.stringify(process.platform),
+        'process.env.NODE_ENV': JSON.stringify(webpackEnv),
+        'process.env.NODE_DEBUG': JSON.stringify(isDev),
+        'process.env': '({})',
+        'process.throwDeprecation': 'false',
+        'process.noDeprecation': 'false',
+        'process.emitWarning': 'undefined',
+        'process': 'undefined',
+      }),
       isDev && new webpack.HotModuleReplacementPlugin(),
-      // Experimental hot reloading for React .
-      // https://github.com/facebook/react/tree/master/packages/react-refresh
       isDev && new ReactRefreshWebpackPlugin({
         overlay: {
           entry: webpackDevClientEntry,
-          // The expected exports are slightly different from what the overlay exports,
-          // so an interop is included here to enable feedback on module-level errors.
           module: reactRefreshOverlayEntry,
-          // Since we ship a custom dev client and overlay integration,
-          // the bundled socket handling logic can be eliminated.
           sockIntegration: false,
         },
       }),
