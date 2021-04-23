@@ -1,14 +1,11 @@
 {
   "parser": "babel-eslint",
-  "extends": [
-    "airbnb"
-  ],
   "plugins": [
     "react",
     "react-hooks"
   ],
   "parserOptions": {
-    "ecmaVersion": 2019
+    "ecmaVersion": 2020
   },
   "env": {
     "node": true,
