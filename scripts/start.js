@@ -8,10 +8,9 @@ const WebpackDevServer = require('webpack-dev-server');
 const { createCompiler, prepareUrls } = require('react-dev-utils/WebpackDevServerUtils');
 const paths = require('../config/paths');
 const configFactory = require('../config/webpack.config');
-const createDevServerConfig = require('../config/webpackDevServer.config');
 
-const PORT = 3000;
-const HOST = '0.0.0.0';
+const port = 3000;
+const host = '0.0.0.0';
 
 const config = configFactory('development');
 const appName = require(paths.appPackageJson).name;
@@ -19,9 +18,9 @@ const appName = require(paths.appPackageJson).name;
 const tscCompileOnError = process.env.TSC_COMPILE_ON_ERROR === 'true';
 const urls = prepareUrls(
   'http',
-  HOST,
-  PORT,
-  paths.publicUrlOrPath.slice(0, -1)
+  host,
+  port,
+  paths.publicUrlOrPath,
 );
 
 const devSocket = {
@@ -40,11 +39,21 @@ const compiler = createCompiler({
   webpack,
 });
 
-const serverConfig = createDevServerConfig(urls.lanUrlForConfig, HOST);
+const devServer = new WebpackDevServer(compiler, {
+  compress: true,
+  hot: true,
+  historyApiFallback: {
+    disableDotRule: true,
+    index: paths.publicUrlOrPath,
+  },
+  host,
+  port,
+  public: host,
+  static: paths.appPublic,
+  transportMode: 'ws',
+});
 
-const devServer = new WebpackDevServer(compiler, serverConfig);
-
-devServer.listen(PORT, HOST, (error) => {
+devServer.listen(port, host, (error) => {
   if (error) {
     return console.log(error);
   }
