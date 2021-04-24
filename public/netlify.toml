@@ -1,0 +1,21 @@
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+
+[[headers]]
+  for = "/*"
+
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Strict-Transport-Security = "max-age=31536000; preload"
+    Content-Security-Policy = """
+      default-src 'self';
+      font-src 'self' data: 'self';
+      connect-src 'self' https://shoonia.wixsite.com;
+      script-src 'self' https://www.google-analytics.com;
+      img-src 'self' https://static.wixstatic.com https://www.google-analytics.com;
+      """
