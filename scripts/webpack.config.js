@@ -1,15 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
-const resolve = require('resolve');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
-const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+
 const paths = require('./paths');
+const pkg = require(paths.appPackageJson);
 
 const webpackDevClientEntry = require.resolve(
   'react-dev-utils/webpackHotDevClient'
@@ -61,7 +61,7 @@ module.exports = (webpackEnv) => {
       pathinfo: isDev,
       filename: 'static/js/[name].[contenthash:4].js',
       chunkFilename: 'static/js/[name].[id].[contenthash:4].chunk.js',
-      publicPath: paths.publicUrlOrPath,
+      publicPath: paths.publicPath,
       devtoolModuleFilenameTemplate: isProd
         ? (info) => path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/')
         : (info) => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
@@ -129,12 +129,8 @@ module.exports = (webpackEnv) => {
     module: {
       strictExportPresence: true,
       rules: [
-        // Disable require.ensure as it's not a standard language feature.
         { parser: { requireEnsure: false } },
         {
-          // "oneOf" will traverse all following loaders until one will
-          // match the requirements. When no loader matches it will fall
-          // back to the "file" loader at the end of the loader list.
           oneOf: [
             // "url" loader works like "file" loader except that it embeds assets
             // smaller than specified limit in bytes as data URLs to avoid requests.
@@ -259,7 +255,8 @@ module.exports = (webpackEnv) => {
     plugins: [
       new HtmlWebpackPlugin({
         filename: 'index.html',
-        inject: true,
+        inject: 'head',
+        scriptLoading: 'defer',
         template: paths.appHtml,
         minify: isProd && {
           removeComments: true,
@@ -274,10 +271,10 @@ module.exports = (webpackEnv) => {
           minifyURLs: true,
         },
         templateParameters: {
-          homepage: paths.publicUrlOrPath,
-        }
+          homepage: pkg.homepage,
+          isProd,
+        },
       }),
-      isProd && new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime-.+[.]js/]),
       new webpack.DefinePlugin({
         'process.platform': JSON.stringify(process.platform),
         'process.env.NODE_ENV': JSON.stringify(webpackEnv),
@@ -302,17 +299,9 @@ module.exports = (webpackEnv) => {
       }),
       // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new ForkTsCheckerWebpackPlugin({
-        typescript: resolve.sync('typescript', {
-          basedir: paths.appNodeModules,
-        }),
-        async: isDev,
-        checkSyntacticErrors: true,
-        tsconfig: paths.appTsConfig,
-        reportFiles: [
-          '../**/src/**/*.{ts,tsx}',
-          '**/src/**/*.{ts,tsx}',
-        ],
-        silent: true,
+        typescript: {
+          configFile: paths.appTsConfig,
+        },
       }),
       new ESLintPlugin({
         extensions: ['js', 'ts', 'tsx'],
