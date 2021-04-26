@@ -1,6 +1,7 @@
 <%
   var title = 'Meming';
   var description = 'Memes about programming';
+  var image = new URL('logo/favicon-192x192.png', homepage).href;
 %>
 
 <!DOCTYPE html>
@@ -28,7 +29,10 @@
   <meta property="og:description" content="<%= description %>">
   <meta property="og:type" content="website">
   <meta property="og:url" content="<%= homepage %>">
-  <meta property="og:image" content="<%= homepage %>/logo/favicon-192x192.png">
+  <meta property="og:image" content="<%= image %>">
+  <meta itemprop="name" content="<%= title %>">
+  <meta itemprop="description" content="<%= description %>">
+  <meta itemprop="image" content="<%= image %>">
   <link href="/manifest.json" rel="manifest">
   <link href="/favicon.ico" rel="shortcut icon">
   <link href="/logo/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32">
