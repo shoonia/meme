@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { HomePage } from './HomePage';
 
+import { HomePage } from './HomePage';
+import { PostPage } from './PostPage';
 import { NotFoundPage } from './NotFoundPage';
 
 interface IRoute {
@@ -19,6 +20,11 @@ export const routes: IRoute[] = [
     path: '/index.html',
     component: HomePage,
     exact: true,
+  },
+  {
+    path: '/post/:id',
+    exact: true,
+    component: PostPage,
   },
   {
     path: '*',

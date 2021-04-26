@@ -115,7 +115,7 @@ module.exports = (webpackEnv) => {
         cacheGroups: {
           vendor: {
             test: /node_modules/,
-            name: "vendor"
+            name: 'vendor',
           },
         },
       },
