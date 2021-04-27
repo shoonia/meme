@@ -37,13 +37,15 @@ module.exports = (webpackEnv) => {
     {
       loader: require.resolve('postcss-loader'),
       options: {
-        plugins: () => [
-          require('postcss-preset-env')({
-            autoprefixer: {
-              flexbox: 'no-2009',
-            },
-          }),
-        ],
+        postcssOptions: {
+          plugins: () => [
+            isProd && require('postcss-preset-env')({
+              autoprefixer: {
+                flexbox: 'no-2009',
+              },
+            }),
+          ].filter(Boolean),
+        },
         sourceMap: isDev,
       },
     },
