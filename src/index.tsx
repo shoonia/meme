@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { StoreContext } from 'storeon/react';
 
+import './styles/global.css';
 import { App } from './components/App';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';

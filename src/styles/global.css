@@ -1,0 +1,15 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+#wrapper {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 40px auto 40px;
+}
