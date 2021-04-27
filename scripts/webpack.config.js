@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const HTMLInlineCSSWebpackPlugin = require('html-inline-css-webpack-plugin').default;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const createLocalIdent = require('mini-css-class-name/css-loader');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -274,6 +275,7 @@ module.exports = (webpackEnv) => {
         filename: 'static/css/[name].[contenthash:4].css',
         chunkFilename: 'static/css/[name].[contenthash:4].chunk.css',
       }),
+      isProd && new HTMLInlineCSSWebpackPlugin(),
       // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new ForkTsCheckerWebpackPlugin({
         typescript: {
