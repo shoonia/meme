@@ -39,7 +39,7 @@ module.exports = (webpackEnv) => {
       loader: require.resolve('postcss-loader'),
       options: {
         postcssOptions: {
-          plugins: () => [
+          plugins: [
             require('postcss-import'),
             require('postcss-simple-vars'),
             isProd && require('postcss-preset-env')({
