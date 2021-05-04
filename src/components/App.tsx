@@ -4,8 +4,8 @@ import { Switch, Route } from 'react-router-dom';
 import { routes } from './routers';
 
 export const App: FC = () => {
-  const pages = routes.map((props) => (
-    <Route key={props.path} {...props} />
+  const pages = routes.map((props, i) => (
+    <Route key={i} {...props} />
   ));
 
   return (

@@ -5,21 +5,16 @@ import { PostPage } from './PostPage';
 import { NotFoundPage } from './NotFoundPage';
 
 interface IRoute {
-  path: string;
+  path: string | string[];
   component: FC;
   exact?: boolean;
 }
 
 export const routes: IRoute[] = [
   {
-    path: '/',
-    component: HomePage,
+    path: ['/', '/index.html'],
     exact: true,
-  },
-  {
-    path: '/index.html',
     component: HomePage,
-    exact: true,
   },
   {
     path: '/post/:id',
