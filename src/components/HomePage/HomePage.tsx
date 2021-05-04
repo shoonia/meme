@@ -1,5 +1,7 @@
 import { FC } from 'react';
 
+import { List } from '../List';
+
 export const HomePage: FC = () => (
-  <h1>Home</h1>
+  <List />
 );
