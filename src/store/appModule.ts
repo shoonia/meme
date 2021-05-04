@@ -15,7 +15,7 @@ export const appModule: TModule = ({ on, dispatch }) => {
     };
   });
 
-  fetch('https://shoonia.wixsite.com/meme-api/_functions/list')
+  fetch(process.env.DATA_LIST_URL)
     .then((res) => res.json())
     .then((data) => {
       dispatch('items/load', data.items);

@@ -27,6 +27,7 @@ const cssModuleRegex = /\.module\.css$/;
 module.exports = (webpackEnv) => {
   const isDev = webpackEnv === 'development';
   const isProd = webpackEnv === 'production';
+  const dataListUrl = isDev ? paths.remoteDataListUrl : paths.dataListUrl;
 
   const getStyleLoaders = (cssOptions) => [
     isDev && require.resolve('style-loader'),
@@ -251,16 +252,14 @@ module.exports = (webpackEnv) => {
         templateParameters: {
           homepage: pkg.homepage,
           isProd,
+          dataListUrl,
         },
       }),
       new webpack.DefinePlugin({
         'process.platform': JSON.stringify(process.platform),
         'process.env.NODE_ENV': JSON.stringify(webpackEnv),
-        'process.env.NODE_DEBUG': JSON.stringify(isDev),
+        'process.env.DATA_LIST_URL': JSON.stringify(dataListUrl),
         'process.env': '({})',
-        'process.throwDeprecation': 'false',
-        'process.noDeprecation': 'false',
-        'process.emitWarning': 'undefined',
         'process': 'undefined',
       }),
       isDev && new webpack.HotModuleReplacementPlugin(),

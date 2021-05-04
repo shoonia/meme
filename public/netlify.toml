@@ -15,7 +15,6 @@
     Cache-Control = "public, max-age=86400"
     Content-Security-Policy = """
       default-src 'self';
-      connect-src 'self' https://shoonia.wixsite.com;
       img-src 'self' https://static.wixstatic.com https://www.google-analytics.com;
       """
 
@@ -30,3 +29,9 @@
 
   [headers.values]
     Cache-Control = "public, max-age=31556952, immutable"
+
+[[headers]]
+  for = "*.json"
+
+  [headers.values]
+    Cache-Control = "public, must-revalidate, max-age=300"

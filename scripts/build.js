@@ -1,9 +1,10 @@
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 
-const { emptyDir, copy } = require('fs-extra');
+const { emptyDir, copy, writeJSON } = require('fs-extra');
 const webpack = require('webpack');
 const { measureFileSizesBeforeBuild, printFileSizesAfterBuild } = require('react-dev-utils/FileSizeReporter');
+const axios = require('axios');
 
 const configFactory = require('./webpack.config');
 const paths = require('./paths');
@@ -13,10 +14,17 @@ const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 
 (async () => {
   try {
-    const previousFileSizes = await measureFileSizesBeforeBuild(paths.appBuild);
+    const [previousFileSizes, list] = await Promise.all([
+      measureFileSizesBeforeBuild(paths.appBuild),
+      axios.get(paths.remoteDataListUrl),
+    ]);
 
     await emptyDir(paths.appBuild);
-    await copy(paths.appPublic, paths.appBuild);
+
+    await Promise.all([
+      copy(paths.appPublic, paths.appBuild),
+      writeJSON(paths.appDataList, list.data),
+    ]);
 
     console.log('Creating an optimized production build...\n');
 
