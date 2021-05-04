@@ -16,10 +16,11 @@ export interface IItem {
 
 export interface IState {
   items: IItem[];
+  isLoaded: boolean,
 }
 
 export interface IEvents {
-  'items/set': IItem[];
+  'items/load': IItem[];
 }
 
 export type TModule = StoreonModule<IState, IEvents>;
