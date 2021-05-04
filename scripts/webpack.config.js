@@ -248,6 +248,7 @@ module.exports = (webpackEnv) => {
           minifyJS: true,
           minifyCSS: true,
           minifyURLs: true,
+          sortAttributes: true,
         },
         templateParameters: {
           homepage: pkg.homepage,
