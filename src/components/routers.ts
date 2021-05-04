@@ -4,22 +4,22 @@ import { HomePage } from './HomePage';
 import { PostPage } from './PostPage';
 import { NotFoundPage } from './NotFoundPage';
 
-interface IRoute {
-  path: string | string[];
+export interface IRoute {
+  path: string;
   component: FC;
   exact?: boolean;
 }
 
 export const routes: IRoute[] = [
   {
-    path: ['/', '/index.html'],
-    exact: true,
+    path: '/',
     component: HomePage,
+    exact: true,
   },
   {
     path: '/post/:id',
-    exact: true,
     component: PostPage,
+    exact: true,
   },
   {
     path: '*',

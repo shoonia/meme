@@ -1,11 +1,12 @@
 import { Suspense, FC } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 
 import { routes } from './routers';
+import { AppRoute } from './AppRoute';
 
 export const App: FC = () => {
   const pages = routes.map((props, i) => (
-    <Route key={i} {...props} />
+    <AppRoute key={i} {...props} />
   ));
 
   return (
