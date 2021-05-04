@@ -4,7 +4,6 @@ export const appModule: TModule = ({ on }) => {
   on('@init', () => {
     return {
       items: [],
-      cache: {},
     };
   });
 

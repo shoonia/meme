@@ -10,17 +10,12 @@ export interface IItem {
   id: string;
   title: string;
   body: string;
-  date: string;
+  date: number;
   image: IImage;
-}
-
-export interface ICache {
-  [key: string]: IItem[];
 }
 
 export interface IState {
   items: IItem[];
-  cache: ICache;
 }
 
 export interface IEvents {
