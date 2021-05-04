@@ -1,10 +1,8 @@
 import { createStoreon } from 'storeon';
 
-import { itemsModule, IItemsState, IItemsEvents } from './itemsModule';
+import { IEvents, IState } from './types';
+import { appModule } from './appModule';
 
-export type TState = IItemsState;
-export type TEvents = IItemsEvents;
-
-export const store = createStoreon<TState, TEvents>([
-  itemsModule,
+export const store = createStoreon<IState, IEvents>([
+  appModule,
 ]);
