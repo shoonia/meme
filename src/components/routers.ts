@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { HomePage } from './HomePage';
-import { PostPage } from './PostPage';
+// import { PostPage } from './PostPage';
 import { NotFoundPage } from './NotFoundPage';
 
 export interface IRoute {
@@ -16,11 +16,11 @@ export const routes: IRoute[] = [
     component: HomePage,
     exact: true,
   },
-  {
-    path: '/post/:id',
-    component: PostPage,
-    exact: true,
-  },
+  // {
+  //   path: '/post/:id',
+  //   component: PostPage,
+  //   exact: true,
+  // },
   {
     path: '*',
     component: NotFoundPage,

@@ -275,7 +275,9 @@ module.exports = (webpackEnv) => {
         filename: 'static/css/[name].[contenthash:4].css',
         chunkFilename: 'static/css/[name].[contenthash:4].chunk.css',
       }),
-      isProd && new HTMLInlineCSSWebpackPlugin(),
+      isProd && new HTMLInlineCSSWebpackPlugin({
+        leaveCSSFile: true,
+      }),
       // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new ForkTsCheckerWebpackPlugin({
         typescript: {
