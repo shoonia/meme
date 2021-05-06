@@ -5,14 +5,16 @@ import { HomePage } from './HomePage';
 import { NotFoundPage } from './NotFoundPage';
 
 export interface IRoute {
-  path: string;
+  path: string | string[];
   component: FC;
   exact?: boolean;
 }
 
+export const MODAL_PATH = '/fullscreen/:id';
+
 export const routes: IRoute[] = [
   {
-    path: '/',
+    path: ['/', MODAL_PATH],
     component: HomePage,
     exact: true,
   },

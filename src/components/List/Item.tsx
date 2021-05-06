@@ -1,12 +1,14 @@
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 import s from './Item.module.css';
 import { IItem } from '../../store/types';
 import { Image } from '../Image';
 import { Time } from '../Time';
 
-export const Item: FC<IItem> = ({ title, body, date, image }) => {
+export const Item: FC<IItem> = ({ id, title, body, date, image }) => {
   const heading = title !== '' ? title : '***';
+  const link = `/fullscreen/${id}`;
 
   const figcaption = body !== '' && (
     <figcaption>
@@ -20,7 +22,9 @@ export const Item: FC<IItem> = ({ title, body, date, image }) => {
         {heading}
       </h2>
       <figure>
-        <Image {...image} />
+        <Link to={link}>
+          <Image {...image} />
+        </Link>
         {figcaption}
       </figure>
       <Time date={date} />
