@@ -116,15 +116,15 @@ module.exports = (webpackEnv) => {
           },
         }),
       ],
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          vendor: {
-            test: /node_modules/,
-            name: 'vendor',
-          },
-        },
-      },
+      // splitChunks: {
+      //   chunks: 'all',
+      //   cacheGroups: {
+      //     vendor: {
+      //       test: /node_modules/,
+      //       name: 'vendor',
+      //     },
+      //   },
+      // },
     },
     resolve: {
       modules: [

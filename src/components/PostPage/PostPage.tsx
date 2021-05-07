@@ -1,5 +1,19 @@
 import { FC } from 'react';
 
-export const PostPage: FC = () => (
-  <h1>Post</h1>
-);
+import { Image } from '../Image';
+import { usePost } from '../../hooks/usePost';
+import { isUndefined } from '../../util';
+
+export const PostPage: FC = () => {
+  const post = usePost();
+
+  const image = isUndefined(post) || (
+    <Image {...post.image} />
+  );
+
+  return (
+    <div>
+      {image}
+    </div>
+  );
+};

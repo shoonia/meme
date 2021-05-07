@@ -3,11 +3,19 @@ import ReactModal from 'react-modal';
 import { useHistory } from 'react-router';
 
 import s from './Modal.module.css';
+import { Image } from '../Image';
+import { usePost } from '../../hooks/usePost';
+import { isUndefined } from '../../util';
 
 ReactModal.setAppElement('#root');
 
 export const Modal: FC = () => {
   const { goBack } = useHistory();
+  const post = usePost();
+
+  const image = isUndefined(post) || (
+    <Image {...post.image} />
+  );
 
   return (
     <ReactModal
@@ -96,7 +104,7 @@ export const Modal: FC = () => {
       //   setContentRef
       //   /* Content ref callback. */}
     >
-      Fullscreen
+      {image}
     </ReactModal>
   );
 };
