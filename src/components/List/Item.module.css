@@ -1,3 +1,11 @@
+@import '../../styles/vars.css';
+
 .title {
   text-align: center;
+  font-weight: normal;
+}
+
+.link {
+  color: $color-primary;
+  text-decoration: none;
 }

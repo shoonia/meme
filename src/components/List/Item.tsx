@@ -8,7 +8,8 @@ import { Time } from '../Time';
 
 export const Item: FC<IItem> = ({ id, title, body, date, image }) => {
   const heading = title !== '' ? title : '***';
-  const link = `/fullscreen/${id}`;
+  const linkFullscreen = `/fullscreen/${id}`;
+  const linkPost = `/post/${id}`;
 
   const figcaption = body !== '' && (
     <figcaption>
@@ -19,10 +20,12 @@ export const Item: FC<IItem> = ({ id, title, body, date, image }) => {
   return (
     <article>
       <h2 className={s.title}>
-        {heading}
+        <Link to={linkPost} className={s.link}>
+          {heading}
+        </Link>
       </h2>
       <figure>
-        <Link to={link}>
+        <Link to={linkFullscreen}>
           <Image {...image} />
         </Link>
         {figcaption}

@@ -18,8 +18,7 @@ export const Modal: FC = () => {
       className={s.modal}
       bodyOpenClassName={s.bodyOpen}
       htmlOpenClassName={s.rootOpen}
-
-      // portalClassName={s.portal}
+      portalClassName=""
 
       // onAfterOpen={
       //   handleAfterOpenFunc
