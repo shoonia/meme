@@ -26,7 +26,7 @@ export const Item: FC<IItem> = ({ id, title, body, date, image }) => {
       </h2>
       <figure>
         <Link to={linkFullscreen}>
-          <Image {...image} />
+          <Image lazy {...image} />
         </Link>
         {figcaption}
       </figure>

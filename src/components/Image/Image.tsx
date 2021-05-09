@@ -6,9 +6,10 @@ interface Props {
   src: string;
   width: number;
   height: number;
+  lazy?: boolean;
 }
 
-export const Image: FC<Props> = ({ src, width, height }) => {
+export const Image: FC<Props> = ({ src, width, height, lazy = false }) => {
   const link = `https://static.wixstatic.com/media/${src}`;
 
   return (
@@ -17,8 +18,8 @@ export const Image: FC<Props> = ({ src, width, height }) => {
       width={width}
       height={height}
       className={s.image}
-      loading="lazy"
-      decoding="async"
+      loading={lazy ? 'lazy' : undefined}
+      decoding={lazy ? 'async' : undefined}
       crossOrigin="anonymous"
       alt=""
     />
