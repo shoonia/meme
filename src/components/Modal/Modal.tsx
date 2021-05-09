@@ -4,6 +4,7 @@ import { useHistory } from 'react-router';
 
 import s from './Modal.module.css';
 import { Image } from '../Image';
+import { Close } from './Close';
 import { usePost } from '../../hooks/usePost';
 import { isUndefined } from '../../util';
 
@@ -13,6 +14,8 @@ export const Modal: FC = () => {
   const { goBack } = useHistory();
   const post = usePost();
 
+  const close = () => goBack();
+
   const image = !isUndefined(post) && (
     <Image {...post.image} />
   );
@@ -20,7 +23,7 @@ export const Modal: FC = () => {
   return (
     <ReactModal
       isOpen
-      onRequestClose={() => goBack()}
+      onRequestClose={close}
       contentLabel="fullscreen"
       overlayClassName={s.overlay}
       className={s.modal}
@@ -104,6 +107,7 @@ export const Modal: FC = () => {
       //   setContentRef
       //   /* Content ref callback. */}
     >
+      <Close onClick={close} />
       {image}
     </ReactModal>
   );

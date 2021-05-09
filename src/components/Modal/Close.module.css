@@ -1,0 +1,37 @@
+.close {
+  display: inline-block;
+  position: fixed;
+  vertical-align: top;
+  width: 40px;
+  height: 40px;
+  right: 20px;
+  top: 20px;
+  background-color: rgba(10, 10, 10, 0.2);
+  border-radius: 100%;
+  cursor: pointer;
+  border: none;
+  appearance: none;
+  z-index: 11;
+}
+
+.close::before,
+.close::after {
+  background-color: #fff;
+  content: "";
+  display: block;
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  transform-origin: center center;
+}
+
+.close::before {
+  height: 2px;
+  width: 50%;
+}
+
+.close::after {
+  height: 50%;
+  width: 2px;
+}
