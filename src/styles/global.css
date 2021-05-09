@@ -9,6 +9,7 @@
 body {
   margin: 0;
   font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: $main-bg-color;
 }
 
 #header {
@@ -17,7 +18,7 @@ body {
   left: 0;
   right: 0;
   z-index: 1;
-  background-color: #363636;
+  background-color: $extra-bg-color;
 }
 
 #footer {
@@ -26,5 +27,5 @@ body {
   left: 0;
   right: 0;
   z-index: 1;
-  background-color: #363636;
+  background-color: $extra-bg-color;
 }

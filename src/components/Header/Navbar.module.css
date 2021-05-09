@@ -12,6 +12,15 @@
 
 .link {
   line-height: $header-height;
-  color: #fff;
+  color: $extra-text-color;
   text-decoration: none;
+  height: $header-height;
+  padding: 0 15px;
+  display: inline-block;
+}
+
+.active,
+.link:hover,
+.link:focus {
+  background-color: $extra-bg-dr-color;
 }

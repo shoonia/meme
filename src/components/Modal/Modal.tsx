@@ -13,7 +13,7 @@ export const Modal: FC = () => {
   const { goBack } = useHistory();
   const post = usePost();
 
-  const image = isUndefined(post) || (
+  const image = !isUndefined(post) && (
     <Image {...post.image} />
   );
 

@@ -7,7 +7,7 @@ import { isUndefined } from '../../util';
 export const PostPage: FC = () => {
   const post = usePost();
 
-  const image = isUndefined(post) || (
+  const image = !isUndefined(post) && (
     <Image {...post.image} />
   );
 
