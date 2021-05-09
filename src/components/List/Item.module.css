@@ -1,5 +1,14 @@
 @import '../../styles/vars.css';
 
+.card {
+  border-radius: 6px;
+  box-shadow: 0 2px 3px rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 10%);
+  color: #4a4a4a;
+  display: block;
+  padding: 1.25rem;
+  background-color: #fff;
+}
+
 .title {
   text-align: center;
   font-weight: normal;

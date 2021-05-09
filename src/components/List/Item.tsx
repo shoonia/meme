@@ -18,7 +18,7 @@ export const Item: FC<IItem> = ({ id, title, body, date, image }) => {
   );
 
   return (
-    <article>
+    <article className={s.card}>
       <h2 className={s.title}>
         <Link to={linkPost} className={s.link}>
           {heading}

@@ -3,6 +3,7 @@ import { List as VirtualizedList, ListRowRenderer } from 'react-virtualized/dist
 import { WindowScroller, WindowScrollerChildProps } from 'react-virtualized/dist/es/WindowScroller';
 import { useStoreon } from 'storeon/react';
 
+import s from './List.module.css';
 import { IState } from '../../store/types';
 import { Item } from './Item';
 
@@ -14,7 +15,11 @@ export const List: FC = () => {
     index,
     style,
   }) => (
-    <div key={key} style={style}>
+    <div
+      key={key}
+      style={style}
+      className={s.item}
+    >
       <Item {...items[index]} />
     </div>
   );
@@ -27,13 +32,14 @@ export const List: FC = () => {
   }) => (
     <VirtualizedList
       autoHeight
+      width={600}
       height={height}
       isScrolling={isScrolling}
       onScroll={onChildScroll}
       scrollTop={scrollTop}
-      width={500}
       rowCount={items.length}
-      rowHeight={600}
+      className={s.list}
+      rowHeight={500}
       rowRenderer={rowRenderer}
     />
   );

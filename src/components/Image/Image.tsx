@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import s from './Image.module.css';
+import { classNames } from '../../util';
 
 interface Props {
   src: string;
@@ -12,12 +13,17 @@ interface Props {
 export const Image: FC<Props> = ({ src, width, height, lazy = false }) => {
   const link = `https://static.wixstatic.com/media/${src}`;
 
+  const className = classNames(
+    s.image,
+    lazy && s.lazy,
+  );
+
   return (
     <img
       src={link}
       width={width}
       height={height}
-      className={s.image}
+      className={className}
       loading={lazy ? 'lazy' : undefined}
       decoding={lazy ? 'async' : undefined}
       crossOrigin="anonymous"
